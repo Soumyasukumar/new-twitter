@@ -7,9 +7,9 @@ let tweets = [];
 let threadSummaries = {};
 
 Promise.all([
-  fetch("tweets.json").then(response => response.json()),
-  fetch("grokKeywords.json").then(response => response.json()),
-  fetch("grokInfo.json").then(response => response.json())
+  fetch("./tweets.json").then(response => response.json()),
+  fetch("./grokKeywords.json").then(response => response.json()),
+  fetch("./grokInfo.json").then(response => response.json())
 ])
   .then(([tweetsData, keywordsData, infoData]) => {
     tweets = tweetsData.tweets;
