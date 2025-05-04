@@ -7,3 +7,4 @@ const users = [
   { handle: "@soukumya_sukuma", bio: "Hackathon participant", group: "Friends" },
   { handle: "@techguru", bio: "Tech innovator", group: "Tech Influencers" }
 ];
+

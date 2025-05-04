@@ -12,9 +12,9 @@
 <body class="min-h-screen">
   <!-- Main Container -->
   <div class="flex max-w-7xl mx-auto">
-    <!-- Left Sidebar (Hidden on mobile, shown via hamburger) -->
+    <!-- Left Sidebar (Hidden on mobile via CSS) -->
     <div id="left-sidebar"
-      class="w-20 md:w-64 bg-black border-r border-gray-800 fixed top-0 left-0 h-full hidden md:block">
+      class="w-20 md:w-64 bg-black border-r border-gray-800 fixed top-0 left-0 h-full">
       <div class="p-4">
         <!-- Logo -->
         <div class="mb-4">
@@ -35,7 +35,7 @@
             <span class="w-2 h-2 bg-blue-500 rounded-full ml-2 hidden md:inline"></span>
           </a>
           <a href="#" class="flex items-center p-2 text-white hover:bg-gray-800 rounded-full">
-            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 24">
+            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
               <path
                 d="M21 8.25c0-2.485-2.015-4.5-4.5-4.5a4.503 4.503 0 00-4.218 3H7.5v1.5h4.782a4.503 4.503 0 004.218 3c2.485 0 4.5-2.015 4.5-4.5zm-9 7.5c-2.485 0-4.5-2.015-4.5-4.5S9.515 6.75 12 6.75s4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5z" />
             </svg>
@@ -55,13 +55,13 @@
             </svg>
             <span class="hidden md:inline">Messages</span>
           </a>
-          <a href="#" class="flex items-center p-2 text-white hover:bg-gray-800 rounded-full" onclick="openGrokModal()">
-            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+          <button onclick="openGrokModal()" class="flex flex-col items-center text-white">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
               <path
                 d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 3c1.655 0 3 1.345 3 3s-1.345 3-3 3-3-1.345-3-3 1.345-3 3-3zm0 12.75c-3.315 0-6-2.685-6-6h12c0 3.315-2.685 6-6 6z" />
             </svg>
-            <span class="hidden md:inline">Grok</span>
-          </a>
+            <span class="text-xs">Grok</span>
+          </button>
           <a href="#" class="flex items-center p-2 text-white hover:bg-gray-800 rounded-full">
             <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
               <path
@@ -109,24 +109,8 @@
       </div>
     </div>
 
-    <!-- Mobile Hamburger Menu -->
-    <div
-      class="md:hidden fixed top-0 left-0 w-full bg-black border-b border-gray-800 p-4 flex items-center justify-between z-50">
-      <div>
-        <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-          <path
-            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-        </svg>
-      </div>
-      <button onclick="toggleSidebar()" class="text-white">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-    </div>
-
     <!-- Center Feed -->
-    <div class="w-full md:ml-20 lg:ml-64 max-w-2xl mx-auto pt-16 md:pt-0">
+    <div id="center-feed" class="w-full md:ml-20 lg:ml-64 max-w-2xl mx-auto pt-16 md:pt-0">
       <!-- Tweet Composer Modal (Mobile) -->
       <div id="tweet-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden flex items-center justify-center z-50">
         <div class="bg-black border border-gray-800 p-4 rounded-lg w-11/12 max-w-md">
@@ -204,17 +188,26 @@
         </div>
       </div>
 
-
       <!-- AI Summarizer Modal -->
       <div id="summarizer-modal" class="fixed bg-black bg-opacity-75 hidden z-50">
         <div id="summarizer-modal-content"
           class="bg-black border border-gray-800 p-4 rounded-lg w-80 max-h-64 overflow-y-auto">
-          <div class="flex justify-between items-center mb-2">
+          <div class="flex justify-between items-center mb-2" style="padding-right: -10%;">
             <div class="flex items-center">
-              <svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                <path
-                  d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14H6v-2h4v2zm6-4H6v-2h10v2zm0-4H6V7h10v2z" />
-              </svg>
+              <span class="new-badge bg-orange-500 text-white text-xs font-inter px-2 py-1 rounded-full mr-2">NEW</span>
+              <div class="relative">
+                
+                <svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24"
+                  onmouseover="showTooltip('ai-summarizer-tooltip')"
+                  onmouseout="hideTooltip('ai-summarizer-tooltip')">
+                  <path
+                    d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14H6v-2h4v2zm6-4H6v-2h10v2zm0-4H6V7h10v2z" />
+                </svg>
+                <div id="ai-summarizer-tooltip"
+                  class="tooltip absolute hidden bg-gray-700 text-white text-sm p-2 rounded-lg w-48 -top-10 left-0">
+                  AI Thread Summarizer: Summarizes long threads into concise insights for quick understanding.
+                </div>
+              </div>
               <h2 class="font-bold font-inter text-white">Thread Summary</h2>
             </div>
             <button onclick="closeSummarizerModal()" class="text-gray-500 hover:text-white">
@@ -227,6 +220,15 @@
             <p>Loading summary...</p>
           </div>
         </div>
+      </div>
+
+      <!-- Feed Tabs -->
+      <div class="bg-black border-b border-gray-800 flex">
+        <button id="for-you-tab"
+          class="flex-1 py-4 text-center font-inter font-medium text-white border-b-2 border-blue-500"
+          onclick="switchTab('for-you')">For you</button>
+        <button id="following-tab" class="flex-1 py-4 text-center font-inter font-medium text-gray-500 hover:text-white"
+          onclick="switchTab('following')">Following</button>
       </div>
 
       <!-- Tweet Composer (Desktop) -->
@@ -274,46 +276,45 @@
         </div>
       </div>
 
-      <!-- Live Event Mode -->
-      <div class="bg-black border-b border-gray-800 p-4" id="live-event-section">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <span class="font-bold font-inter text-white mr-2">📡 Live Event Mode</span>
+      <!-- Group Filter and Live Event Mode -->
+      <div class="bg-black border-b border-gray-800 p-4" id="group-section">
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center relative">
+            <span class="new-badge bg-orange-500 text-white text-xs font-inter px-2 py-1 rounded-full mr-2">NEW</span>
+            <span class="font-bold font-inter text-white mr-2" onmouseover="showTooltip('groups-tooltip')"
+              onmouseout="hideTooltip('groups-tooltip')">👥 Groups</span>
+            <div id="groups-tooltip"
+              class="tooltip absolute hidden bg-gray-700 text-white text-sm p-2 rounded-lg w-48 -top-10 left-0">
+              Groups: Filter posts by specific groups like Tech Influencers, Friends, or Sports Fans.
+            </div>
+            <select id="group-select" class="p-2 bg-black border border-gray-800 rounded font-inter text-white"
+              onchange="filterByGroup()">
+              <option value="All">All</option>
+              <option value="Tech Influencers">Tech Influencers</option>
+              <option value="Friends">Friends</option>
+              <option value="Sports Fans">Sports Fans</option>
+            </select>
+          </div>
+          <div class="flex items-center relative">
+            <span class="new-badge bg-orange-500 text-white text-xs font-inter px-2 py-1 rounded-full mr-2">NEW</span>
+            <span class="font-bold font-inter text-white mr-2" onmouseover="showTooltip('live-event-tooltip')"
+              onmouseout="hideTooltip('live-event-tooltip')">📡 Live Event Mode</span>
+            <div id="live-event-tooltip"
+              class="tooltip absolute hidden bg-gray-700 text-white text-sm p-2 rounded-lg w-48 -top-10 left-0">
+              Live Event Mode: Follow real-time updates on events like AIConf or NBA Finals.
+            </div>
             <select id="event-select" class="p-2 bg-black border border-gray-800 rounded font-inter text-white"
               onchange="toggleLiveEvent()">
               <option value="none">Off</option>
               <option value="AIConf">AIConf</option>
               <option value="NBAFinals">NBAFinals</option>
             </select>
+            <button id="event-refresh"
+              class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-full font-inter hover:bg-blue-600 hidden"
+              onclick="refreshEventFeed()" style="width: 22%; font-size: 15px;">
+              Refresh
+            </button>
           </div>
-          <button id="event-refresh"
-            class="bg-blue-500 text-white px-4 py-2 rounded-full font-inter hover:bg-blue-600 hidden"
-            onclick="refreshEventFeed()">
-            Refresh
-          </button>
-        </div>
-      </div>
-
-      <!-- Feed Tabs -->
-      <div class="bg-black border-b border-gray-800 flex">
-        <button id="for-you-tab"
-          class="flex-1 py-4 text-center font-inter font-medium text-white border-b-2 border-blue-500"
-          onclick="switchTab('for-you')">For you</button>
-        <button id="following-tab" class="flex-1 py-4 text-center font-inter font-medium text-gray-500 hover:text-white"
-          onclick="switchTab('following')">Following</button>
-      </div>
-
-      <!-- Group Filter -->
-      <div class="bg-black border-b border-gray-800 p-4" id="group-section">
-        <div class="flex items-center">
-          <span class="font-bold font-inter text-white mr-2">👥 Groups</span>
-          <select id="group-select" class="p-2 bg-black border border-gray-800 rounded font-inter text-white"
-            onchange="filterByGroup()">
-            <option value="All">All</option>
-            <option value="Tech Influencers">Tech Influencers</option>
-            <option value="Friends">Friends</option>
-            <option value="Sports Fans">Sports Fans</option>
-          </select>
         </div>
       </div>
 
@@ -359,13 +360,74 @@
           <p class="text-white font-inter">82.8K posts</p>
         </div>
         <a href="#" class="text-blue-500 font-inter hover:underline">Show more</a>
+        <!-- New Features Tag -->
+        <div class="mt-4">
+          <h2 class="text-xl font-bold font-inter mb-2">New Features</h2>
+          <div class="flex flex-wrap gap-2">
+            <div class="flex items-center">
+              <span class="bg-gray-800 text-white text-sm font-inter px-2 py-1 rounded-full">AI thread summarizer icon<svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 24 24"
+                onmouseover="showTooltip('ai-summarizer-tooltip')"
+                onmouseout="hideTooltip('ai-summarizer-tooltip')">
+                <path
+                  d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 14H6v-2h4v2zm6-4H6v-2h10v2zm0-4H6V7h10v2z" />
+              </svg> </span>
+              <span class="ml-1 bg-orange-500 text-white text-xs font-inter px-2 py-1 rounded-full">New</span>
+            </div>
+            <div class="flex items-center">
+              <span class="bg-gray-800 text-white text-sm font-inter px-2 py-1 rounded-full">Live event mode 📡</span>
+              <span class="ml-1 bg-orange-500 text-white text-xs font-inter px-2 py-1 rounded-full">New</span>
+            </div>
+            <div class="flex items-center">
+              <span class="bg-gray-800 text-white text-sm font-inter px-2 py-1 rounded-full">Grouping of friends and family 👥</span>
+              <span class="ml-1 bg-orange-500 text-white text-xs font-inter px-2 py-1 rounded-full">New</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- More Options Modal - Left Side -->
+  <!-- Bottom Navigation Bar (Mobile Only) -->
+  <nav id="bottom-nav" class="md:hidden fixed bottom-0 left-0 w-full bg-black border-t border-gray-800 flex justify-around py-2 z-50">
+    <a href="#" class="flex flex-col items-center text-white">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-.75 3.75h1.5v3.75h3.75v1.5h-3.75v3.75h-1.5v-3.75H7.5v-1.5h3.75V6z" />
+      </svg>
+      <span class="text-xs">Home</span>
+    </a>
+    <a href="#" class="flex flex-col items-center text-white">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M21 8.25c0-2.485-2.015-4.5-4.5-4.5a4.503 4.503 0 00-4.218 3H7.5v1.5h4.782a4.503 4.503 0 004.218 3c2.485 0 4.5-2.015 4.5-4.5zm-9 7.5c-2.485 0-4.5-2.015-4.5-4.5S9.515 6.75 12 6.75s4.5 2.015 4.5 4.5-2.015 4.5-4.5 4.5z" />
+      </svg>
+      <span class="text-xs">Explore</span>
+    </a>
+    <a href="#" class="flex flex-col items-center text-white">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm0 15.75c-.825 0-1.5-.675-1.5-1.5s.675-1.5 1.5-1.5 1.5.675 1.5 1.5-.675 1.5-1.5 1.5zm1.5-4.5h-3V6.75h3V13.5z" />
+      </svg>
+      <span class="text-xs">Notifications</span>
+    </a>
+    <a href="#" class="flex flex-col items-center text-white">
+      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M21 6.75h-3.75v-1.5c0-2.485-2.015-4.5-4.5-4.5h-3c-2.485 0-4.5 2.015-4.5 4.5v1.5H3v1.5h2.25v9c0 .825.675 1.5 1.5 1.5h12c.825 0 1.5-.675 1.5-1.5v-9H21v-1.5zm-9.75-3h3c.825 0 1.5.675 1.5 1.5v1.5h-6v-1.5c0-.825.675-1.5 1.5-1.5z" />
+      </svg>
+      <span class="text-xs">Messages</span>
+    </a>
+    <button onclick="openMoreOptions()" class="flex flex-col items-center text-white">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+      </svg>
+      <span class="text-xs">More</span>
+    </button>
+  </nav>
+
+  <!-- More Options Modal -->
   <div id="more-options-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden z-50">
-    <div class="h-full w-64 bg-black border-r border-gray-800 overflow-y-auto">
+    <div class="h-full md:w-64 w-full bg-black border-r border-gray-800 overflow-y-auto md:top-0 bottom-0">
       <div class="p-4 sticky top-0 bg-black border-b border-gray-800 flex justify-between items-center">
         <h2 class="font-bold font-inter text-white text-xl">More Options</h2>
         <button onclick="closeMoreOptions()" class="text-gray-500 hover:text-white">
@@ -376,17 +438,23 @@
       </div>
       <div class="space-y-1 p-2">
         <div class="p-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-          <h3 class="font-bold text-white">Lists</h3>
+          <h3 class="font-bold text-white">Grok</h3>
+        </div>
+        <div class="p-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+          <h3 class="font-bold text-white">Communities</h3>
         </div>
         <div class="p-3 hover:bg-gray-800 rounded-lg cursor-pointer">
           <h3 class="font-bold text-white">Premium</h3>
           <p class="text-gray-500 text-sm mt-1">Bookmarks, Communities, Monetization, Verified Orgs, Ads, Jobs</p>
         </div>
         <div class="p-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-          <h3 class="font-bold text-white">Bookmarks</h3>
+          <h3 class="font-bold text-white">Profile</h3>
         </div>
         <div class="p-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-          <h3 class="font-bold text-white">Communities</h3>
+          <h3 class="font-bold text-white">Lists</h3>
+        </div>
+        <div class="p-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+          <h3 class="font-bold text-white">Bookmarks</h3>
         </div>
         <div class="p-3 hover:bg-gray-800 rounded-lg cursor-pointer">
           <h3 class="font-bold text-white">Monetization</h3>
@@ -402,6 +470,9 @@
         </div>
         <div class="p-3 hover:bg-gray-800 rounded-lg cursor-pointer">
           <h3 class="font-bold text-white">Create your Space</h3>
+        </div>
+        <div class="p-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+          <h3 class="font-bold text-white">Messages</h3>
         </div>
         <div class="p-3 hover:bg-gray-800 rounded-lg cursor-pointer">
           <h3 class="font-bold text-white">Settings and privacy</h3>
@@ -425,6 +496,15 @@
       <img src="grok.svg" alt="Grok Logo" class="w-6 h-6 text-white" />
     </button>
   </div>
+
+  <!-- Floating Tweet Composer Button (Mobile Only) -->
+<div id="floating-tweet-btn" class="md:hidden fixed bottom-16 right-4 z-50">
+  <button onclick="openTweetModal()" class="bg-blue-500 p-4 rounded-full shadow-lg hover:bg-blue-600">
+    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.536L16.732 3.732z" />
+    </svg>
+  </button>
+</div>
 
 
 </body>

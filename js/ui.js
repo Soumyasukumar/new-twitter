@@ -67,3 +67,29 @@ function closeSummarizerModal() {
   document.getElementById("summarizer-modal").classList.add("hidden");
   document.getElementById("summarizer-content").innerHTML = `<p>Loading summary...</p>`;
 }
+function showTooltip(tooltipId) {
+  const tooltip = document.getElementById(tooltipId);
+  if (tooltip) {
+    tooltip.classList.remove('hidden');
+  }
+}
+
+function hideTooltip(tooltipId) {
+  const tooltip = document.getElementById(tooltipId);
+  if (tooltip) {
+    tooltip.classList.add('hidden');
+  }
+}
+
+function openMoreOptions() {
+  const modal = document.getElementById('more-options-modal');
+  modal.classList.add('open');
+}
+
+function closeMoreOptions() {
+  const modal = document.getElementById('more-options-modal');
+  modal.classList.remove('open');
+}
+
+
+
